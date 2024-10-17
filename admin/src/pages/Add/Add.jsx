@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './Add.css'
 import { assets } from '../../assets/assets'
 import axios from "axios"
@@ -6,18 +6,18 @@ import { toast } from 'react-toastify'
 
 const Add = ( {url}) => {
 
-    const [image,setImage] = useState(false);
+    const [image,setImage] = useState(null);
     const [data,setData] = useState ({
         name:"",
         description:"",
         price:"",
         category:"Salad"
-    })
+    });
 
     const onChangeHandler = (event) =>{
         const name = event.target.name;
         const value = event.target.value;
-        setData(data=>({...data,[name]:value}))
+        setData(prevdata=>({...prevdata,[name]:value}));
     }
 
     const onSubmitHandler =async (event) =>{
@@ -47,7 +47,7 @@ const Add = ( {url}) => {
   return (
     <div className='add'>
         <form className='flex-col' onSubmit={onSubmitHandler}>
-            <div className="add-image-upload flex-col">
+            <div className="add-img-upload flex-col">
                 <p>Upload Image</p>
                 <label htmlFor="image">
                     <img src={image?URL.createObjectURL(image):assets.upload_area} alt=""/>
@@ -67,6 +67,7 @@ const Add = ( {url}) => {
                     <p>Product category</p>
                     <select onChange={onChangeHandler} name='category'>
                         <option value="Salad">Salad</option>
+                        <option value="Pure veg">Pure Veg</option>
                         <option value="Rolls">Rolls</option>
                         <option value="Deserts">Deserts</option>
                         <option value="Sandwich">Sandwich</option>
